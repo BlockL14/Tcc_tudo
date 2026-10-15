@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import {
   LayoutDashboard, Package, Warehouse, Truck as TruckIcon, Search as SearchIcon,
   ClipboardList, AlertTriangle, Users, Shield, Settings, ChevronDown, Bell,
-  HelpCircle, CheckCircle2, Clock, Factory, Home, BarChart3, Car, MapPin,
+  HelpCircle, CheckCircle2, Clock, Factory, Home, BarChart3, Car, MapPin, LogOut,
 } from "lucide-react";
  
 // ---------------------------------------------------------------------------
@@ -92,8 +92,19 @@ const toneColors = {
   cyan: { bg: "rgba(34,211,238,0.14)", bar: "#22D3EE", text: "#67E8F9" },
 };
  
-export default function DashboardScreen() {
+const perfilLabels = {
+  administrador: "Administrador",
+  gerente_logistico: "Gerente logístico",
+  operador: "Operador",
+};
+
+export default function DashboardScreen({ usuario, onSair }) {
   const [activeItem, setActiveItem] = useState("Dashboard");
+
+  const nomeUsuario = usuario?.nome || usuario?.login || "Usuário";
+  const primeiroNome = nomeUsuario.split(" ")[0];
+  const inicial = nomeUsuario.charAt(0).toUpperCase();
+  const perfil = perfilLabels[usuario?.perfil] || usuario?.perfil || "";
  
   const totalStatus = statusBreakdown.reduce((s, x) => s + x.value, 0);
   let acc = 0;
@@ -168,6 +179,12 @@ export default function DashboardScreen() {
         .db-search input { background: transparent; border: none; outline: none; color: #F4F2FB; font-size: 13.5px; width: 100%; }
         .db-topbar-icons { display: flex; align-items: center; gap: 14px; }
         .db-icon-btn { position: relative; color: #9891B5; cursor: pointer; }
+        .db-logout {
+          display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px; border-radius: 9px;
+          border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.04); color: #C9C3E0;
+          font-size: 12.5px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif;
+        }
+        .db-logout:hover { background: rgba(248,113,113,0.12); border-color: rgba(248,113,113,0.4); color: #FCA5A5; }
         .db-badge {
           position: absolute; top: -6px; right: -7px; background: #F87171; color: white;
           font-size: 10px; font-weight: 700; border-radius: 999px; width: 16px; height: 16px;
@@ -311,10 +328,10 @@ export default function DashboardScreen() {
         ))}
  
         <div className="db-sidebar-footer">
-          <span className="db-avatar">F</span>
+          <span className="db-avatar">{inicial}</span>
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontSize: 13, fontWeight: 600 }}>Fletcher</div>
-            <div style={{ fontSize: 11, color: "#8981A8" }}>Administrador</div>
+            <div style={{ fontSize: 13, fontWeight: 600, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{nomeUsuario}</div>
+            <div style={{ fontSize: 11, color: "#8981A8" }}>{perfil}</div>
           </div>
           <ChevronDown size={15} color="#8981A8" />
         </div>
@@ -326,7 +343,7 @@ export default function DashboardScreen() {
         <div className="db-topbar">
           <div className="db-greeting">
             <div>
-              <h1 className="db-display">Olá, Fletcher! 👋</h1>
+              <h1 className="db-display">Olá, {primeiroNome}! 👋</h1>
               <p>Acompanhe toda a sua operação em tempo real.</p>
             </div>
           </div>
@@ -344,7 +361,11 @@ export default function DashboardScreen() {
             <span className="db-icon-btn">
               <HelpCircle size={19} />
             </span>
-            <span className="db-avatar" style={{ width: 32, height: 32, fontSize: 12 }}>F</span>
+            <span className="db-avatar" style={{ width: 32, height: 32, fontSize: 12 }}>{inicial}</span>
+            <button type="button" className="db-logout" onClick={onSair}>
+              <LogOut size={15} />
+              Sair
+            </button>
           </div>
         </div>
  

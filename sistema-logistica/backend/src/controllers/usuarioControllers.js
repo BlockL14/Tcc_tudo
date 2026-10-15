@@ -30,7 +30,7 @@ async function buscarPorId(req, res) {
 
 async function criar(req, res) {
     try {
-        const { login, senha, perfil } = req.body;
+        const { login, senha, perfil, nome, cnpj } = req.body;
 
         if (!login || !senha) {
             return res.status(400).json({ erro: "Login e senha são obrigatórios" });
@@ -46,7 +46,9 @@ async function criar(req, res) {
         const novoUsuario = await usuarioModel.criarUsuario({
             login,
             senhaHash,
-            perfil: perfil || "operador"
+            perfil: perfil || "operador",
+            nome,
+            cnpj
         });
 
         res.status(201).json(novoUsuario);
@@ -114,6 +116,8 @@ async function login(req, res) {
         res.json({
             id: usuario.id,
             login: usuario.login,
+            nome: usuario.nome,
+            cnpj: usuario.cnpj,
             perfil: usuario.perfil
         });
     } catch (erro) {

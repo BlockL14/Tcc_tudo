@@ -25,7 +25,7 @@ function useNodePositions(count, containerRef) {
   return Array.from({ length: count }, (_, i) => (i + 0.5) / count);
 }
 
-export default function LogisticsHero() {
+export default function LogisticsHero({ onEntrar, onComecar }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeStage, setActiveStage] = useState(0);
 
@@ -115,6 +115,7 @@ export default function LogisticsHero() {
 
         <button
           className="lh-btn"
+          onClick={onEntrar}
           style={{
             background: "linear-gradient(135deg,#8B5CF6,#7C3AED)",
             border: "none",
@@ -192,6 +193,7 @@ export default function LogisticsHero() {
             <div style={{ display: "flex", gap: 14, marginTop: 34, flexWrap: "wrap" }}>
               <button
                 className="lh-btn"
+                onClick={onComecar}
                 style={{
                   background: "linear-gradient(135deg,#8B5CF6,#7C3AED)",
                   border: "none",

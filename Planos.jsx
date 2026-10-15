@@ -57,7 +57,7 @@ const planos = [
   },
 ];
  
-export default function PlanosSection() {
+export default function PlanosSection({ onEscolherPlano }) {
   return (
     <section
       id="planos"
@@ -196,7 +196,10 @@ export default function PlanosSection() {
                     ))}
                   </ul>
  
-                  <button className={`pl-btn ${p.accent === "cyan" ? "cyan" : ""}`}>
+                  <button
+                    className={`pl-btn ${p.accent === "cyan" ? "cyan" : ""}`}
+                    onClick={onEscolherPlano}
+                  >
                     Escolher Plano
                   </button>
                 </div>

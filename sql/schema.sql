@@ -41,6 +41,10 @@ CREATE TABLE IF NOT EXISTS usuarios (
     criado_em TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
+-- dados vindos da tela de cadastro (o email fica na coluna login)
+ALTER TABLE usuarios ADD COLUMN IF NOT EXISTS nome VARCHAR(150);
+ALTER TABLE usuarios ADD COLUMN IF NOT EXISTS cnpj VARCHAR(18);
+
 -- veiculos
 CREATE TABLE IF NOT EXISTS veiculos (
     id SERIAL PRIMARY KEY,

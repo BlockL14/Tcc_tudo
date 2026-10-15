@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { cadastrarUsuario } from "./api";
 
 const styles = `
   .signup-root{
@@ -222,6 +223,7 @@ const styles = `
   }
   .status-banner.show{ display:block; }
   .status-banner.success{ background:rgba(74,222,128,.12); border:1px solid rgba(74,222,128,.4); color:var(--success); }
+  .status-banner.error{ background:rgba(255,107,107,.12); border:1px solid rgba(255,107,107,.4); color:var(--error); }
 
   .success-screen{
     display:flex;
@@ -318,6 +320,8 @@ export default function SignupForm({ onGoToLogin }) {
 
   const [errors, setErrors] = useState({});
   const [statusMessage, setStatusMessage] = useState("");
+  const [erroEnvio, setErroEnvio] = useState("");
+  const [enviando, setEnviando] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [summary, setSummary] = useState(null);
 
@@ -334,10 +338,13 @@ export default function SignupForm({ onGoToLogin }) {
     setCnpj(maskCNPJ(e.target.value));
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
+    if (enviando) return;
     setStatusMessage("");
+    setErroEnvio("");
 
+    const emailLimpo = email.trim().toLowerCase();
     const newErrors = {};
     let valid = true;
 
@@ -353,7 +360,7 @@ export default function SignupForm({ onGoToLogin }) {
       }
     }
 
-    if (!validEmail(email)) {
+    if (!validEmail(emailLimpo)) {
       newErrors.email = true;
       valid = false;
     }
@@ -371,13 +378,28 @@ export default function SignupForm({ onGoToLogin }) {
     setErrors(newErrors);
     if (!valid) return;
 
-    const tipo = naoEmpresa ? "Pessoa física" : "Empresa";
-    setSummary({
-      nome,
-      tipo,
+    const dados = {
+      nome: nome.trim(),
       cnpj: naoEmpresa ? null : cnpj,
-      email,
-    });
+      email: emailLimpo,
+    };
+
+    setEnviando(true);
+    try {
+      await cadastrarUsuario({ ...dados, senha });
+    } catch (erro) {
+      setErroEnvio(
+        erro.status === 409
+          ? "Este email já está cadastrado. Faça login."
+          : erro.message
+      );
+      return;
+    } finally {
+      setEnviando(false);
+    }
+
+    const tipo = naoEmpresa ? "Pessoa física" : "Empresa";
+    setSummary({ ...dados, tipo });
     setSubmitted(true);
   }
 
@@ -391,6 +413,7 @@ export default function SignupForm({ onGoToLogin }) {
     setShowSenha(false);
     setErrors({});
     setStatusMessage("");
+    setErroEnvio("");
     setSubmitted(false);
     setSummary(null);
   }
@@ -413,7 +436,7 @@ export default function SignupForm({ onGoToLogin }) {
               <h1>Crie uma conta</h1>
               <p className="subtitle">
                 Já tem uma conta?{" "}
-                <button type="button" className="link-btn" onClick={onGoToLogin}>
+                <button type="button" className="link-btn" onClick={() => onGoToLogin()}>
                   Login
                 </button>
               </p>
@@ -529,9 +552,15 @@ export default function SignupForm({ onGoToLogin }) {
                   Você precisa aceitar os termos.
                 </div>
 
-                <button type="submit" className="btn-primary">
-                  Criar conta
+                <button type="submit" className="btn-primary" disabled={enviando}>
+                  {enviando ? "Criando conta..." : "Criar conta"}
                 </button>
+
+                {erroEnvio && (
+                  <div className="status-banner show error" role="alert">
+                    {erroEnvio}
+                  </div>
+                )}
 
                 {statusMessage && (
                   <div className="status-banner show">{statusMessage}</div>
@@ -624,6 +653,13 @@ export default function SignupForm({ onGoToLogin }) {
                   <span>{summary?.email}</span>
                 </div>
               </div>
+              <button
+                type="button"
+                className="btn-primary"
+                onClick={() => onGoToLogin(summary?.email)}
+              >
+                Ir para o login
+              </button>
               <button className="btn-secondary" onClick={handleReset}>
                 Criar outra conta
               </button>
