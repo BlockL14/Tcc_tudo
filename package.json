@@ -1,51 +1,18 @@
 {
-  "name": "react",
-  "description": "React is a JavaScript library for building user interfaces.",
-  "keywords": [
-    "react"
-  ],
-  "version": "19.3.0",
-  "homepage": "https://react.dev/",
-  "bugs": "https://github.com/react/react/issues",
-  "license": "MIT",
-  "files": [
-    "LICENSE",
-    "README.md",
-    "index.js",
-    "cjs/",
-    "compiler-runtime.js",
-    "jsx-runtime.js",
-    "jsx-runtime.react-server.js",
-    "jsx-dev-runtime.js",
-    "jsx-dev-runtime.react-server.js",
-    "react.react-server.js"
-  ],
-  "main": "index.js",
-  "exports": {
-    ".": {
-      "react-server": "./react.react-server.js",
-      "default": "./index.js"
-    },
-    "./package.json": "./package.json",
-    "./jsx-runtime": {
-      "react-server": "./jsx-runtime.react-server.js",
-      "default": "./jsx-runtime.js"
-    },
-    "./jsx-dev-runtime": {
-      "react-server": "./jsx-dev-runtime.react-server.js",
-      "default": "./jsx-dev-runtime.js"
-    },
-    "./compiler-runtime": {
-      "react-server": "./compiler-runtime.js",
-      "default": "./compiler-runtime.js"
-    }
+  "name": "bankai",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/react/react.git",
-    "directory": "packages/react"
+  "devDependencies": {
+    "vite": "^8.3.0"
   },
-  "engines": {
-    "node": ">=0.10.0"
+  "dependencies": {
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
   }
 }

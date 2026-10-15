@@ -1,21 +1,15 @@
-import LogisticsHero from './LogisticsHero';
-import VantagensSection from './Vantagens';
-import ComoFuncionaSection from './ComoFunciona';
-import PlanosSection from './Planos';
-import FooterSection from './Footer';
-import DashboardSection from './Dashboard';
+import { useState } from "react";
+import SignupForm from "./Cadastro";
+import LoginScreen from "./login";
 
 function App() {
-  return (
-    <>
-      <LogisticsHero />
-      <VantagensSection />
-      <ComoFuncionaSection />
-      <PlanosSection />
-      <FooterSection />
-      <DashboardSection />
-    </>
-  );
+  const [tela, setTela] = useState("cadastro");
+
+  if (tela === "login") {
+    return <LoginScreen onGoToSignup={() => setTela("cadastro")} />;
+  }
+
+  return <SignupForm onGoToLogin={() => setTela("login")} />;
 }
 
 export default App;
