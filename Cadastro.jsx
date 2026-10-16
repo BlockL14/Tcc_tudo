@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { cadastrarUsuario } from "./api";
+import imagemInicial from "./imagem-inicial.webp";
 
 const styles = `
   .signup-root{
@@ -425,7 +426,7 @@ export default function SignupForm({ onGoToLogin }) {
       <div className="card">
         <div className="art-panel">
           <img
-            src="/imagem-inicial.webp"
+            src={imagemInicial}
             alt="Ilustração de boas-vindas"
           />
         </div>
