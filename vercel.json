@@ -1,9 +1,8 @@
 {
-    "version": 2,
-    "builds": [
-        { "src": "backend/src/server.js", "use": "@vercel/node" }
-    ],
-    "routes": [
-        { "src": "/(.*)", "dest": "backend/src/server.js" }
+    "framework": "vite",
+    "buildCommand": "npm run build",
+    "outputDirectory": "dist",
+    "rewrites": [
+        { "source": "/api/(.*)", "destination": "/api" }
     ]
 }
