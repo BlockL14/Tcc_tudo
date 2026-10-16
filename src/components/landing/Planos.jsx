@@ -1,6 +1,6 @@
 import React from "react";
 import { Package, Truck, Building2, CheckCircle2 } from "lucide-react";
-import Reveal from "./Reveal";
+import Reveal from "../Reveal";
  
 // ---------------------------------------------------------------------------
 // Volta à paleta violeta do Hero/Vantagens. O topo da seção tem um fade que

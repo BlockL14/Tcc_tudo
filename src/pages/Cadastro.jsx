@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { cadastrarUsuario } from "./api";
+import { cadastrarUsuario } from "../services/api";
 
 const styles = `
   .signup-root{

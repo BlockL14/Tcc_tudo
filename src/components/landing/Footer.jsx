@@ -1,5 +1,5 @@
 import React from "react";
-import Reveal from "./Reveal";
+import Reveal from "../Reveal";
  
 // Ícones feitos à mão em SVG — evita depender de nomes de exportação
 // específicos do lucide-react, que mudam entre versões do pacote.

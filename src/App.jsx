@@ -1,12 +1,8 @@
 import { useState } from "react";
-import LogisticsHero from "./LogisticsHero";
-import VantagensSection from "./Vantagens";
-import ComoFuncionaSection from "./ComoFunciona";
-import PlanosSection from "./Planos";
-import FooterSection from "./Footer";
-import SignupForm from "./Cadastro";
-import LoginScreen from "./login";
-import DashboardScreen from "./Dashboard";
+import InicioScreen from "./pages/Inicio";
+import SignupForm from "./pages/Cadastro";
+import LoginScreen from "./pages/Login";
+import DashboardScreen from "./pages/Dashboard";
 
 // Fluxo entre as telas:
 // início (landing) -> cadastro <-> login -> dashboard -> sair (volta ao login)
@@ -52,15 +48,7 @@ function App() {
     return <SignupForm onGoToLogin={irParaLogin} />;
   }
 
-  return (
-    <>
-      <LogisticsHero onEntrar={() => irParaLogin()} onComecar={irParaCadastro} />
-      <VantagensSection />
-      <ComoFuncionaSection />
-      <PlanosSection onEscolherPlano={irParaCadastro} />
-      <FooterSection />
-    </>
-  );
+  return <InicioScreen onEntrar={() => irParaLogin()} onComecar={irParaCadastro} />;
 }
 
 export default App;

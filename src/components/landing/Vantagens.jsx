@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Zap, ShieldCheck, DollarSign, BarChart3, Plus } from "lucide-react";
-import Reveal from "./Reveal";
+import Reveal from "../Reveal";
  
 // ---------------------------------------------------------------------------
 // Mesma linguagem visual do Hero: fundo #0A0716, acento violeta, Space Grotesk

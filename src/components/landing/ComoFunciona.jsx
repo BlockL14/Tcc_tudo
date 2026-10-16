@@ -1,6 +1,6 @@
 import React from "react";
 import { PackageSearch, Truck, MapPin, ShieldCheck } from "lucide-react";
-import Reveal from "./Reveal";
+import Reveal from "../Reveal";
 
 // ---------------------------------------------------------------------------
 // Layout diferente das demais seções: em vez de uma grade de cards, os 4

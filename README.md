@@ -7,14 +7,21 @@ Front-end em React + Vite e back-end em Node.js + Express com PostgreSQL (Neon).
 
 ```
 .
-├── index.html, main.jsx, App.jsx    entrada do front e navegação entre as telas
-├── LogisticsHero.jsx, Vantagens.jsx, ComoFunciona.jsx,
-│   Planos.jsx, Footer.jsx, Reveal.jsx    landing page
-├── Cadastro.jsx, login.jsx           cadastro e login (gravam e consultam o banco)
-├── Dashboard.jsx                     painel após o login
-├── api.js                            chamadas do front para o back-end
-├── index.css                         estilos globais
+├── index.html                        página única; carrega src/main.jsx
 ├── public/                           arquivos servidos como estão (favicon, imagens)
+├── src/                              front-end React
+│   ├── main.jsx                      ponto de entrada
+│   ├── App.jsx                       navegação entre as telas
+│   ├── index.css                     estilos globais
+│   ├── pages/                        uma tela por arquivo
+│   │   ├── Inicio.jsx                landing page (junta as seções abaixo)
+│   │   ├── Cadastro.jsx              grava o usuário no banco
+│   │   ├── Login.jsx                 confere email e senha no banco
+│   │   └── Dashboard.jsx             painel após o login
+│   ├── components/
+│   │   ├── Reveal.jsx                animação de entrada ao rolar a página
+│   │   └── landing/                  LogisticsHero, Vantagens, ComoFunciona, Planos, Footer
+│   └── services/api.js               chamadas do front para o back-end
 ├── sql/schema.sql                    criação das tabelas (pode rodar mais de uma vez)
 └── sistema-logistica/backend/        API Express
     └── src/  routes/ → controllers/ → models/ → database/connection.js
