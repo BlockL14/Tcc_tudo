@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const veiculoControllers = require("../controllers/veiculoControllers");
+const validarId = require("../middlewares/validarId");
+
+router.param("id", validarId);
 
 router.get("/", veiculoControllers.listar);
 router.get("/:id", veiculoControllers.buscarPorId);

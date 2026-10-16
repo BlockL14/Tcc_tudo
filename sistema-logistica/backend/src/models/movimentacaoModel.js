@@ -28,7 +28,7 @@ async function criarMovimentacao({ produto_id, origem, destino }) {
 async function atualizarMovimentacao(id, { produto_id, origem, destino }) {
     const resultado = await pool.query(
         `UPDATE movimentacoes
-         SET produto_id = $1, origem = $2, destino = $3
+         SET produto_id = COALESCE($1, produto_id), origem = COALESCE($2, origem), destino = COALESCE($3, destino)
          WHERE id = $4
          RETURNING *`,
         [produto_id, origem, destino, id]

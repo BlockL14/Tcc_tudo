@@ -22,7 +22,7 @@ async function criarProduto({ nome, descricao, preco, quantidade }) {
         `INSERT INTO produtos (nome, descricao, preco, quantidade)
          VALUES ($1, $2, $3, $4)
          RETURNING *`,
-        [nome, descricao, preco, quantidade]
+        [nome, descricao, preco, quantidade ?? 0]
     );
     return resultado.rows[0];
 }
@@ -30,7 +30,7 @@ async function criarProduto({ nome, descricao, preco, quantidade }) {
 async function atualizarProduto(id, { nome, descricao, preco, quantidade }) {
     const resultado = await pool.query(
         `UPDATE produtos
-         SET nome = $1, descricao = $2, preco = $3, quantidade = $4
+         SET nome = COALESCE($1, nome), descricao = COALESCE($2, descricao), preco = COALESCE($3, preco), quantidade = COALESCE($4, quantidade)
          WHERE id = $5
          RETURNING *`,
         [nome, descricao, preco, quantidade, id]

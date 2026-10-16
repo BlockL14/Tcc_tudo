@@ -1,8 +1,11 @@
-rodar
-node sistema-logistica/backend/src/server.js
+rodar o backend (porta 3000)
+cd sistema-logistica/backend
+npm install        (só na primeira vez; instala express, cors, pg, dotenv e bcrypt)
+npm start
 
-npm install bcrypt
-npm install express cors pg dotenv
+rodar o front (porta 5173), em outro terminal, na raiz do projeto
+npm install        (só na primeira vez)
+npm run dev
 
 
 
@@ -13,13 +16,13 @@ Invoke-RestMethod -Uri http://localhost:3000/produtos
 #buscar por id                                 id a do produto
 Invoke-RestMethod -Uri http://localhost:3000/produtos/1
 #delete                                      id do produto a deletar 
-Invoke-RestMethod -Uri http://localhost:3000/produtos/1 -Method DELETES
+Invoke-RestMethod -Uri http://localhost:3000/produtos/1 -Method DELETE
 
 #criar usuarios
 Invoke-RestMethod -Uri http://localhost:3000/usuarios -Method POST -ContentType "application/json" -Body '{"login":"admin","senha":"123456","perfil":"administrador"}'
                                                       |listar tudo
                                                       /1|listar por id
-                                                      /1 -Method DELETEs| delete por id
+                                                      /1 -Method DELETE | delete por id
 
 
 #armazens

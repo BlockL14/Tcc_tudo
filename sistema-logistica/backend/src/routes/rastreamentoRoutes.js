@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const rastreamentoControllers = require("../controllers/rastreamentoControllers");
+const validarId = require("../middlewares/validarId");
+
+router.param("id", validarId);
+router.param("entrega_id", validarId);
 
 router.get("/", rastreamentoControllers.listar);
 

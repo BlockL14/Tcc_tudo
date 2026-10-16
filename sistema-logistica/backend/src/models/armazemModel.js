@@ -20,7 +20,7 @@ async function criarArmazem({ nome, localizacao, capacidade_maxima, status }) {
         `INSERT INTO armazens (nome, localizacao, capacidade_maxima, status)
          VALUES ($1, $2, $3, $4)
          RETURNING *`,
-        [nome, localizacao, capacidade_maxima, status || "ativo"]
+        [nome, localizacao, capacidade_maxima ?? 0, status || "ativo"]
     );
     return resultado.rows[0];
 }
@@ -28,7 +28,7 @@ async function criarArmazem({ nome, localizacao, capacidade_maxima, status }) {
 async function atualizarArmazem(id, { nome, localizacao, capacidade_maxima, status }) {
     const resultado = await pool.query(
         `UPDATE armazens
-         SET nome = $1, localizacao = $2, capacidade_maxima = $3, status = $4
+         SET nome = COALESCE($1, nome), localizacao = COALESCE($2, localizacao), capacidade_maxima = COALESCE($3, capacidade_maxima), status = COALESCE($4, status)
          WHERE id = $5
          RETURNING *`,
         [nome, localizacao, capacidade_maxima, status, id]

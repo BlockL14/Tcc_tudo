@@ -28,7 +28,7 @@ async function criarTransportadora({ nome, cnpj, contato }) {
 async function atualizarTransportadora(id, { nome, cnpj, contato }) {
     const resultado = await pool.query(
         `UPDATE transportadoras
-         SET nome = $1, cnpj = $2, contato = $3
+         SET nome = COALESCE($1, nome), cnpj = COALESCE($2, cnpj), contato = COALESCE($3, contato)
          WHERE id = $4
          RETURNING *`,
         [nome, cnpj, contato, id]

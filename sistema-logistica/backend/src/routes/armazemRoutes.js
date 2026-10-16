@@ -1,7 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const armazemControllers = require("../controllers/armazemControllers");
+const validarId = require("../middlewares/validarId");
  
+router.param("id", validarId);
+
 router.get("/", armazemControllers.listar);
 router.get("/:id", armazemControllers.buscarPorId);
 router.post("/", armazemControllers.criar);

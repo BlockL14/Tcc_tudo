@@ -36,7 +36,7 @@ async function criarRastreamento({ entrega_id, localizacao_atual, status }) {
 async function atualizarRastreamento(id, { localizacao_atual, status }) {
     const resultado = await pool.query(
         `UPDATE rastreamento
-         SET localizacao_atual = $1, status = $2
+         SET localizacao_atual = COALESCE($1, localizacao_atual), status = COALESCE($2, status)
          WHERE id = $3
          RETURNING *`,
         [localizacao_atual, status, id]

@@ -269,8 +269,7 @@ function RouteDiagram({ stages, positions, activeStage }) {
       <svg
         viewBox={`0 0 ${width} ${height}`}
         width="100%"
-        height="auto"
-        style={{ overflow: "visible", display: "block", maxWidth: 780, margin: "0 auto" }}
+        style={{ height: "auto", overflow: "visible", display: "block", maxWidth: 780, margin: "0 auto" }}
         preserveAspectRatio="xMidYMid meet"
       >
         <defs>

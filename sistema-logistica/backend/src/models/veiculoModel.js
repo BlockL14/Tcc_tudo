@@ -20,7 +20,7 @@ async function criarVeiculo({ placa, modelo, capacidade_carga, status, transport
         `INSERT INTO veiculos (placa, modelo, capacidade_carga, status, transportadora_id)
          VALUES ($1, $2, $3, $4, $5)
          RETURNING *`,
-        [placa, modelo, capacidade_carga, status || "disponivel", transportadora_id || null]
+        [placa, modelo, capacidade_carga ?? 0, status || "disponivel", transportadora_id || null]
     );
     return resultado.rows[0];
 }
@@ -28,7 +28,7 @@ async function criarVeiculo({ placa, modelo, capacidade_carga, status, transport
 async function atualizarVeiculo(id, { placa, modelo, capacidade_carga, status, transportadora_id }) {
     const resultado = await pool.query(
         `UPDATE veiculos
-         SET placa = $1, modelo = $2, capacidade_carga = $3, status = $4, transportadora_id = $5
+         SET placa = COALESCE($1, placa), modelo = COALESCE($2, modelo), capacidade_carga = COALESCE($3, capacidade_carga), status = COALESCE($4, status), transportadora_id = COALESCE($5, transportadora_id)
          WHERE id = $6
          RETURNING *`,
         [placa, modelo, capacidade_carga, status, transportadora_id || null, id]

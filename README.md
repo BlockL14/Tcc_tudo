@@ -1,37 +1,65 @@
-# `react`
+# Bankai — Sistema de Logística (TCC)
 
-React is a JavaScript library for creating user interfaces.
+Rastreamento e controle de produtos, armazéns, transportadoras, veículos e entregas.
+Front-end em React + Vite e back-end em Node.js + Express com PostgreSQL (Neon).
 
-The `react` package contains only the functionality necessary to define React components. It is typically used together with a React renderer like `react-dom` for the web, or `react-native` for the native environments.
+## Estrutura
 
-**Note:** by default, React will be in development mode. The development version includes extra warnings about common mistakes, whereas the production version includes extra performance optimizations and strips all error messages. Don't forget to use the [production build](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build) when deploying your application.
-
-## Usage
-
-```js
-import { useState } from 'react';
-import { createRoot } from 'react-dom/client';
-
-function Counter() {
-  const [count, setCount] = useState(0);
-  return (
-    <>
-      <h1>{count}</h1>
-      <button onClick={() => setCount(count + 1)}>
-        Increment
-      </button>
-    </>
-  );
-}
-
-const root = createRoot(document.getElementById('root'));
-root.render(<Counter />);
+```
+.
+├── index.html, main.jsx, App.jsx    entrada do front e navegação entre as telas
+├── LogisticsHero.jsx, Vantagens.jsx, ComoFunciona.jsx,
+│   Planos.jsx, Footer.jsx, Reveal.jsx    landing page
+├── Cadastro.jsx, login.jsx           cadastro e login (gravam e consultam o banco)
+├── Dashboard.jsx                     painel após o login
+├── api.js                            chamadas do front para o back-end
+├── index.css                         estilos globais
+├── public/                           arquivos servidos como estão (favicon, imagens)
+├── sql/schema.sql                    criação das tabelas (pode rodar mais de uma vez)
+└── sistema-logistica/backend/        API Express
+    └── src/  routes/ → controllers/ → models/ → database/connection.js
 ```
 
-## Documentation
+Fluxo das telas: **início → cadastro ⇄ login → dashboard → sair**.
 
-See https://react.dev/
+## Como rodar
+
+1. **Banco:** rode `sql/schema.sql` no PostgreSQL (no Neon, pelo SQL Editor).
+2. **Back-end** (porta 3000):
+   ```bash
+   cd sistema-logistica/backend
+   cp .env.example .env      # preencha DATABASE_URL com a string do Neon
+   npm install
+   npm start
+   ```
+   `npm run test:db` testa só a conexão com o banco.
+3. **Front-end** (porta 5173), em outro terminal, na raiz:
+   ```bash
+   npm install
+   npm run dev
+   ```
+   Se a API estiver em outro endereço, crie `.env` na raiz com `VITE_API_URL=https://...`.
 
 ## API
 
-See https://react.dev/reference/react
+Todas as entidades têm as mesmas cinco rotas:
+
+| Método | Caminho | Ação |
+|---|---|---|
+| GET | `/<entidade>` | lista |
+| GET | `/<entidade>/:id` | busca por id |
+| POST | `/<entidade>` | cria |
+| PUT | `/<entidade>/:id` | atualiza (só os campos enviados) |
+| DELETE | `/<entidade>/:id` | remove |
+
+Entidades: `usuarios`, `produtos`, `armazens`, `transportadoras`, `veiculos`,
+`entregas`, `movimentacoes`, `rastreamento`.
+
+Rotas extras:
+- `POST /usuarios/login` — `{ "login": "email", "senha": "..." }`
+- `GET /rastreamento/entrega/:entrega_id` — histórico de uma entrega
+
+Respostas de erro: `400` dados ou id inválidos, `404` não encontrado,
+`409` registro duplicado (login, CNPJ, placa).
+
+Exemplos de chamadas em PowerShell estão em `lembrar.txt`.

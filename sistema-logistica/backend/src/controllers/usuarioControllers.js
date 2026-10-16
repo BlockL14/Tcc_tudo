@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const usuarioModel = require("../models/usuarioModel");
 
 const SALT_ROUNDS = 10;
+const PERFIL_INVALIDO = "Perfil inválido. Use: administrador, gerente_logistico ou operador";
 
 async function listar(req, res) {
     try {
@@ -54,6 +55,9 @@ async function criar(req, res) {
         res.status(201).json(novoUsuario);
     } catch (erro) {
         console.error(erro);
+        if (erro.code === "23514") {
+            return res.status(400).json({ erro: PERFIL_INVALIDO });
+        }
         res.status(500).json({ erro: "Erro ao criar usuário" });
     }
 }
@@ -74,6 +78,12 @@ async function atualizar(req, res) {
         res.json(usuarioAtualizado);
     } catch (erro) {
         console.error(erro);
+        if (erro.code === "23505") {
+            return res.status(409).json({ erro: "Login já cadastrado" });
+        }
+        if (erro.code === "23514") {
+            return res.status(400).json({ erro: PERFIL_INVALIDO });
+        }
         res.status(500).json({ erro: "Erro ao atualizar usuário" });
     }
 }

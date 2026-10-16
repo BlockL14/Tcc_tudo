@@ -28,7 +28,7 @@ async function criarEntrega({ produto_id, quantidade, destino, data_prevista, st
 async function atualizarEntrega(id, { produto_id, quantidade, destino, data_prevista, status }) {
     const resultado = await pool.query(
         `UPDATE entregas
-         SET produto_id = $1, quantidade = $2, destino = $3, data_prevista = $4, status = $5
+         SET produto_id = COALESCE($1, produto_id), quantidade = COALESCE($2, quantidade), destino = COALESCE($3, destino), data_prevista = COALESCE($4, data_prevista), status = COALESCE($5, status)
          WHERE id = $6
          RETURNING *`,
         [produto_id, quantidade, destino, data_prevista, status, id]

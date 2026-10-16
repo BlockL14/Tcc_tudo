@@ -36,7 +36,7 @@ async function criarUsuario({ login, senhaHash, perfil, nome, cnpj }) {
 async function atualizarUsuario(id, { login, perfil }) {
     const resultado = await pool.query(
         `UPDATE usuarios
-         SET login = $1, perfil = $2
+         SET login = COALESCE($1, login), perfil = COALESCE($2, perfil)
          WHERE id = $3
          RETURNING id, login, nome, cnpj, perfil, criado_em`,
         [login, perfil, id]
