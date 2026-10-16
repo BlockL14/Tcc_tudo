@@ -1,6 +1,8 @@
 // Comunicação das telas com o backend (pasta backend/).
-// Em outro endereço, defina VITE_API_URL no arquivo frontend/.env.
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+// No npm run dev o backend roda à parte, na porta 3000; na Vercel ele responde
+// no mesmo site, em /api. Em outro endereço, defina VITE_API_URL no arquivo frontend/.env.
+const API_URL =
+  import.meta.env.VITE_API_URL || (import.meta.env.DEV ? "http://localhost:3000" : "/api");
 
 async function enviar(caminho, corpo) {
   let resposta;
