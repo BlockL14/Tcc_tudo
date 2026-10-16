@@ -1,9 +1,9 @@
 import { useState } from "react";
-import LogisticsHero from "./LogisticsHero";
-import VantagensSection from "./Vantagens";
-import ComoFuncionaSection from "./ComoFunciona";
-import PlanosSection from "./Planos";
-import FooterSection from "./Footer";
+import LogisticsHero from "../landing/LogisticsHero";
+import VantagensSection from "../landing/Vantagens";
+import ComoFuncionaSection from "../landing/ComoFunciona";
+import PlanosSection from "../landing/Planos";
+import FooterSection from "../landing/Footer";
 import SignupForm from "./Cadastro";
 import LoginScreen from "./login";
 import DashboardScreen from "./Dashboard";

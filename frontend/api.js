@@ -1,5 +1,5 @@
-// Comunicação das telas com o backend (sistema-logistica/backend).
-// Em outro endereço, defina VITE_API_URL no arquivo .env da raiz.
+// Comunicação das telas com o backend (pasta backend/).
+// Em outro endereço, defina VITE_API_URL no arquivo frontend/.env.
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 async function enviar(caminho, corpo) {
