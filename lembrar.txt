@@ -6,6 +6,21 @@ npm start
 rodar o site (porta 5173), em outro terminal, na raiz do projeto
 npm install        (só na primeira vez)
 npm run dev
+(o site chama /api/... e o vite repassa para o backend na porta 3000)
+
+
+#deploy na vercel (um projeto só: site + backend no mesmo endereço)
+- o site é o build do vite (pasta dist/) e o backend roda pela função api/index.js
+- as telas chamam /api/usuarios, /api/usuarios/login etc. no mesmo domínio
+- as dependências do backend também ficam no package.json da raiz (a vercel só instala esse)
+no painel do projeto na vercel:
+  Settings > Build and Deployment: Root Directory vazio (raiz do repositório)
+  Settings > Environment Variables: DATABASE_URL = string da neon (Production e Preview)
+  não definir VITE_API_URL (se existir, apague)
+  depois de mexer nas variáveis, fazer Redeploy
+no painel da neon: SQL Editor > colar e rodar backend/sql/schema.sql (só uma vez)
+conferir: https://SEU-DOMINIO/api  deve responder {"mensagem":"Sistema de Logística funcionando!"}
+          https://SEU-DOMINIO/api/produtos  deve responder [] ou a lista (erro 500 = DATABASE_URL ou tabelas)
 
 
 

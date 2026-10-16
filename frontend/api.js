@@ -1,6 +1,8 @@
 // Comunicação das telas com o backend (pasta backend/).
+// O backend responde em /api no mesmo endereço do site: na Vercel pela função
+// api/index.js e no "npm run dev" pelo proxy do vite.config.js.
 // Em outro endereço, defina VITE_API_URL no arquivo frontend/.env.
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+const API_URL = import.meta.env.VITE_API_URL || "/api";
 
 async function enviar(caminho, corpo) {
   let resposta;
